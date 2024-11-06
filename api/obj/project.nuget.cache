@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "2aViGVqnh60=",
+  "dgSpecHash": "SYuAeykAqLc=",
   "success": false,
   "projectFilePath": "/Users/mac/Desktop/gamehub/api/api.csproj",
   "expectedPackageFiles": [
+    "/Users/mac/.nuget/packages/automapper/13.0.1/automapper.13.0.1.nupkg.sha512",
     "/Users/mac/.nuget/packages/dotenv.net/3.2.1/dotenv.net.3.2.1.nupkg.sha512",
     "/Users/mac/.nuget/packages/humanizer.core/2.14.1/humanizer.core.2.14.1.nupkg.sha512",
     "/Users/mac/.nuget/packages/microsoft.bcl.asyncinterfaces/7.0.0/microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",
