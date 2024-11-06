@@ -1,15 +1,24 @@
-var builder = WebApplication.CreateBuilder(args);
+using api.Data;
+using dotenv.net;
+using Microsoft.EntityFrameworkCore;
 
-// Add services to the container.
+
+
+DotEnv.Load();
+
+var builder = WebApplication.CreateBuilder(args);
+var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
+var mysqlServerServerVersion = new MySqlServerVersion(new Version(8, 0, 36));
+
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddDbContext<GamehubContext>(options => options.UseMySql(connectionString, mysqlServerServerVersion));
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

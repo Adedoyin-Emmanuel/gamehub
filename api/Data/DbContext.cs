@@ -4,9 +4,9 @@ using api.Models;
 
 namespace api.Data;
 
-public class AppContext: DbContext
+public class GamehubContext: DbContext
 {
-    public AppContext(DbContextOptions<AppContext> options): base(options)
+    public GamehubContext(DbContextOptions<GamehubContext> options): base(options)
     {
         
     }
