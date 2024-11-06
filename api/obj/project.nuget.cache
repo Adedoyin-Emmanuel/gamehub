@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "dgSpecHash": "E5bb2kXqtVE=",
-  "success": true,
+  "dgSpecHash": "2aViGVqnh60=",
+  "success": false,
   "projectFilePath": "/Users/mac/Desktop/gamehub/api/api.csproj",
   "expectedPackageFiles": [
     "/Users/mac/.nuget/packages/dotenv.net/3.2.1/dotenv.net.3.2.1.nupkg.sha512",
@@ -33,6 +33,8 @@
     "/Users/mac/.nuget/packages/microsoft.extensions.primitives/9.0.0-rc.2.24473.5/microsoft.extensions.primitives.9.0.0-rc.2.24473.5.nupkg.sha512",
     "/Users/mac/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
     "/Users/mac/.nuget/packages/mono.texttemplating/3.0.0/mono.texttemplating.3.0.0.nupkg.sha512",
+    "/Users/mac/.nuget/packages/mysqlconnector/2.3.5/mysqlconnector.2.3.5.nupkg.sha512",
+    "/Users/mac/.nuget/packages/pomelo.entityframeworkcore.mysql/9.0.0-preview.1/pomelo.entityframeworkcore.mysql.9.0.0-preview.1.nupkg.sha512",
     "/Users/mac/.nuget/packages/swashbuckle.aspnetcore/6.4.0/swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
     "/Users/mac/.nuget/packages/swashbuckle.aspnetcore.swagger/6.4.0/swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
     "/Users/mac/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.4.0/swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",
@@ -53,5 +55,15 @@
     "/Users/mac/.nuget/packages/system.text.json/9.0.0-rc.2.24473.5/system.text.json.9.0.0-rc.2.24473.5.nupkg.sha512",
     "/Users/mac/.nuget/packages/system.threading.channels/7.0.0/system.threading.channels.7.0.0.nupkg.sha512"
   ],
-  "logs": []
+  "logs": [
+    {
+      "code": "NU1107",
+      "level": "Error",
+      "message": "Version conflict detected for Microsoft.EntityFrameworkCore.Relational. Install/reference Microsoft.EntityFrameworkCore.Relational 9.0.0-rc.2.24474.1 directly to project api to resolve this issue. \n api -> Microsoft.EntityFrameworkCore.Design 9.0.0-rc.2.24474.1 -> Microsoft.EntityFrameworkCore.Relational (>= 9.0.0-rc.2.24474.1) \n api -> Pomelo.EntityFrameworkCore.MySql 9.0.0-preview.1 -> Microsoft.EntityFrameworkCore.Relational (>= 9.0.0-preview.1.24081.2 && <= 9.0.0-preview.1.999999).",
+      "libraryId": "Microsoft.EntityFrameworkCore.Relational",
+      "targetGraphs": [
+        "net8.0"
+      ]
+    }
+  ]
 }
