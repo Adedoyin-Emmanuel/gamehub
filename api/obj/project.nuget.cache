@@ -1,9 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "ksdmiTdBKWQ=",
+  "dgSpecHash": "gAMoPuKhGiI=",
   "success": true,
   "projectFilePath": "/Users/mac/Desktop/gamehub/api/api.csproj",
   "expectedPackageFiles": [
+    "/Users/mac/.nuget/packages/dotenv.net/3.2.1/dotenv.net.3.2.1.nupkg.sha512",
     "/Users/mac/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
     "/Users/mac/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
     "/Users/mac/.nuget/packages/swashbuckle.aspnetcore/6.4.0/swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
