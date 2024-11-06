@@ -1,6 +1,4 @@
-version: "3.8"
-
-services: 
+services:
   database:
     image: mysql/mysql-server
     container_name: gamehub_database
@@ -13,7 +11,7 @@ services:
       - "3306:3306"
     volumes:
       - mysql_data:/var/lib/mysql
-        
+
 volumes:
   mysql_data:
     driver: local
