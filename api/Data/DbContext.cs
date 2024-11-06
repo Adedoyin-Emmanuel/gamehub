@@ -11,6 +11,6 @@ public class AppContext: DbContext
         
     }
     
-    public DbSet<Game> Game { get; set; }
-    public DbSet<Genre> Genre { get; set;}
+    public DbSet<Game> Games { get; set; }
+    public DbSet<Genre> Genres { get; set; }
 }
