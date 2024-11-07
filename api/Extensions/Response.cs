@@ -31,5 +31,10 @@ public class Response
         Data = data;
     }
 
+    public Response(int code, string message, object data) : this(code, message)
+    {
+        Data = data;
+    }
+
 
 }
