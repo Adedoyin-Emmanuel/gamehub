@@ -22,7 +22,7 @@
   <ItemGroup>
     <Folder Include="Interfaces\" />
     <Folder Include="Mappings\" />
-    <Folder Include="Models\Dtos\" />
+    <Folder Include="Models\Dtos\Genre\" />
     <Folder Include="Repositories\" />
     <Folder Include="Services\" />
     <Folder Include="Utils\" />

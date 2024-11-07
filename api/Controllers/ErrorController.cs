@@ -14,8 +14,9 @@ public class ErrorController : ControllerBase
     public IActionResult Error(int code)
     {
         HttpStatusCode parseCode = (HttpStatusCode)code;
-        
-        
+        Error error = new(code, parseCode.ToString());
+
+        return new JsonResult(error);
     }
     
-}
+}       
