@@ -25,13 +25,16 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
-app.MapControllers();
-
 app.UseExceptionHandler("/error/500");
+
 app.UseStatusCodePagesWithReExecute("/error/{0}");
+
+app.MapGroup("api/v1").MapControllers();
+
 
 app.Run();
