@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Mvc;
 using api.Extensions;
+using Asp.Versioning;
 
 namespace api.Controllers;
 
 
+[ApiVersion(1)]
 [ApiController]
-[Route("[controller]")]
+[Route("v{v:apiVersion}/[controller]")]
 public class GameController(ILogger<GameController> logger): ControllerBase
 {
    private readonly ILogger<GameController> _logger = logger;
