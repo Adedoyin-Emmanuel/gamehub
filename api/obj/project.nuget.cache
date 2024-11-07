@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Q4rZTm24YeW57eMz+H4ETCTGP+dQrntvGFiqoEejBFGXBF9PO+ReMjf29e30HqkMPh+ceC14orbGH+BXaxO2tw==",
+  "dgSpecHash": "vXrvxKok8TA=",
   "success": true,
   "projectFilePath": "/Users/mac/Desktop/gamehub/api/api.csproj",
   "expectedPackageFiles": [
@@ -32,6 +32,7 @@
     "/Users/mac/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
     "/Users/mac/.nuget/packages/mono.texttemplating/2.2.1/mono.texttemplating.2.2.1.nupkg.sha512",
     "/Users/mac/.nuget/packages/mysqlconnector/2.3.5/mysqlconnector.2.3.5.nupkg.sha512",
+    "/Users/mac/.nuget/packages/newtonsoft.json/13.0.3/newtonsoft.json.13.0.3.nupkg.sha512",
     "/Users/mac/.nuget/packages/pomelo.entityframeworkcore.mysql/8.0.2/pomelo.entityframeworkcore.mysql.8.0.2.nupkg.sha512",
     "/Users/mac/.nuget/packages/swashbuckle.aspnetcore/6.4.0/swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
     "/Users/mac/.nuget/packages/swashbuckle.aspnetcore.swagger/6.4.0/swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
