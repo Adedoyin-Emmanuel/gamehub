@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using api.Extensions;
 using Asp.Versioning;
 using api.Models.Dtos.Game;
+using AutoMapper;
 
 namespace api.Controllers;
 
@@ -9,17 +10,20 @@ namespace api.Controllers;
 [ApiVersion(1)]
 [ApiController]
 [Route("v{v:apiVersion}/[controller]")]
-public class GameController(ILogger<GameController> logger): ControllerBase
+public class GameController(ILogger<GameController> logger, IMapper mapper): ControllerBase
 {
    private readonly ILogger<GameController> _logger = logger;
+   private readonly IMapper _mapper = mapper;
+   
+   
 
 
    [HttpPost] 
    public async Task<IActionResult> Create(CreateGameDto createGameDto)
    {
     
-      Console.WriteLine(createGameDto.Description);
-     // _logger.LogInformation(createGameDto.ToString());
+      
+      
       return Ok(new Response(200, "Games created successfully"));
    }
 
