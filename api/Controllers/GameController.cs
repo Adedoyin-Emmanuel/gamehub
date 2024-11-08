@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using api.Extensions;
+using api.Models;
 using Asp.Versioning;
 using api.Models.Dtos.Game;
 using AutoMapper;
@@ -21,9 +22,8 @@ public class GameController(ILogger<GameController> logger, IMapper mapper): Con
    [HttpPost] 
    public async Task<IActionResult> Create(CreateGameDto createGameDto)
    {
-    
-      
-      
+
+
       return Ok(new Response(200, "Games created successfully"));
    }
 

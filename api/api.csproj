@@ -27,7 +27,7 @@
     <Folder Include="Interfaces\" />
     <Folder Include="Models\Dtos\Genre\" />
     <Folder Include="Services\" />
-    <Folder Include="Utils\" />
+    <Folder Include="Uploads\" />
   </ItemGroup>
 
 </Project>
