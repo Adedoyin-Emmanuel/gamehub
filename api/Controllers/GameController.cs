@@ -17,7 +17,8 @@ public class GameController(ILogger<GameController> logger): ControllerBase
    [HttpPost] 
    public async Task<IActionResult> Create(CreateGameDto createGameDto)
    {
-      _logger.LogInformation("Creating a game...");
+    
+      Console.WriteLine(createGameDto.Description);
      // _logger.LogInformation(createGameDto.ToString());
       return Ok(new Response(200, "Games created successfully"));
    }

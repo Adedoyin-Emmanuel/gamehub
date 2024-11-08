@@ -7,10 +7,10 @@ public class CreateGameValidator : AbstractValidator<CreateGameDto>
 {
     public CreateGameValidator()
     {
-        RuleFor(game => game.Name).NotNull().NotEmpty().MaximumLength(30);
+        RuleFor(game => game.Name).NotEmpty().MaximumLength(30);
 
-        RuleFor(game => game.Description).NotNull().NotEmpty().MaximumLength(1200);
+        RuleFor(game => game.Description).NotEmpty().MaximumLength(1200);
 
-        RuleFor(game => game.Genre).NotEmpty().NotEmpty();
+        RuleFor(game => game.Genre).NotEmpty().MaximumLength(20);
     }
 }

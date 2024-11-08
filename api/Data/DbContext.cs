@@ -12,5 +12,4 @@ public class GamehubContext: DbContext
     }
     
     public DbSet<Game> Games { get; set; }
-    public DbSet<Genre> Genres { get; set; }
 }
