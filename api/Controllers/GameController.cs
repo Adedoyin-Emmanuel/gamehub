@@ -4,6 +4,7 @@ using api.Models;
 using Asp.Versioning;
 using api.Models.Dtos.Game;
 using AutoMapper;
+using api.Utils;
 
 namespace api.Controllers;
 
@@ -20,10 +21,8 @@ public class GameController(ILogger<GameController> logger, IMapper mapper): Con
 
 
    [HttpPost] 
-   public async Task<IActionResult> Create(CreateGameDto createGameDto)
+   public IActionResult Create([FromForm] CreateGameDto createGameDto,  IFormFile file)
    {
-
-
       return Ok(new Response(200, "Games created successfully"));
    }
 
