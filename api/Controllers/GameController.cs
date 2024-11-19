@@ -5,7 +5,6 @@ using Asp.Versioning;
 using api.Models.Dtos.Game;
 using AutoMapper;
 using api.Utils;
-
 namespace api.Controllers;
 
 
@@ -23,7 +22,21 @@ public class GameController(ILogger<GameController> logger, IMapper mapper): Con
    [HttpPost] 
    public IActionResult Create([FromForm] CreateGameDto createGameDto,  IFormFile file)
    {
-      return Ok(new Response(200, "Games created successfully"));
+      var (isSuccess, response) = FileUploadHandler.Upload(file);
+
+      if (!isSuccess)
+      {
+         return BadRequest(new Response(400, response));
+      }
+      
+      _logger.LogInformation(isSuccess.ToString());
+      _logger.LogInformation(response);
+      
+      return Ok(new Response(200, "Games created successfully", new
+      {
+         createGameDto,
+         imageSrc = response
+      }));
    }
 
 

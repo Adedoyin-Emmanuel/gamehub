@@ -1,8 +1,8 @@
 namespace api.Utils;
 
-public class FileUploadHandler
+public static class FileUploadHandler
 {
-    public (bool, string) Upload(IFormFile file)
+    public static (bool, string) Upload(IFormFile file)
     {
         List<string> allowedExtensions = [".png", ".jpeg", ".gif", ".jpg", ".webp"];
         string extension = Path.GetExtension(file.FileName);
@@ -22,7 +22,9 @@ public class FileUploadHandler
         
         string fileName = Guid.NewGuid().ToString() + "_" + extension;
         string path = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
-        string fileDestination = path + fileName;
+
+        string fileDestination = Path.Combine(path, fileName);
+        Console.WriteLine(fileDestination);
         using FileStream fileStream = new FileStream(fileDestination, FileMode.Create);
 
         file.CopyTo(fileStream);
