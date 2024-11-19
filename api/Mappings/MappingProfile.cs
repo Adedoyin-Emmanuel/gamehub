@@ -9,6 +9,6 @@ public class MappingProfile : Profile
 
     public MappingProfile()
     {
-        CreateMap<Game, CreateGameDto>();
+        CreateMap<CreateGameDto, Game>();   
     }
 }

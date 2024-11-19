@@ -3,6 +3,7 @@ using api.Extensions;
 using api.Models;
 using Asp.Versioning;
 using api.Models.Dtos.Game;
+using api.Repositories.Game;
 using AutoMapper;
 using api.Utils;
 namespace api.Controllers;
@@ -15,12 +16,13 @@ public class GameController(ILogger<GameController> logger, IMapper mapper): Con
 {
    private readonly ILogger<GameController> _logger = logger;
    private readonly IMapper _mapper = mapper;
+   private readonly IGameRepository _gameRepository;
    
    
 
 
    [HttpPost] 
-   public IActionResult Create([FromForm] CreateGameDto createGameDto,  IFormFile file)
+   public async Task<IActionResult> Create([FromForm] CreateGameDto createGameDto,  IFormFile file)
    {
       var (isSuccess, response) = FileUploadHandler.Upload(file);
 
@@ -28,14 +30,18 @@ public class GameController(ILogger<GameController> logger, IMapper mapper): Con
       {
          return BadRequest(new Response(400, response));
       }
+
+
+      var updatedGame = createGameDto with { ImageUrl = response };
+      var game = _mapper.Map<CreateGameDto, Game>(updatedGame);
+
+      Console.WriteLine(game);
       
-      _logger.LogInformation(isSuccess.ToString());
-      _logger.LogInformation(response);
+     // var createdGame = await _gameRepository.CreateGame(game);
       
       return Ok(new Response(200, "Games created successfully", new
       {
-         createGameDto,
-         imageSrc = response
+        game
       }));
    }
 

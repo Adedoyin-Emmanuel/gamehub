@@ -1,7 +1,4 @@
-using api.Controllers;
-using Microsoft.EntityFrameworkCore;
 using api.Data;
-using api.Models;
 
 
 namespace api.Repositories.Game;
@@ -17,11 +14,13 @@ public class GameRepository : IGameRepository
         this._logger = logger;
         this._context = context;
     }
-
-
-    public async void createGame(Models.Game game)
-    {
-        await _context.Games.AddAsync(game);
-    }
     
+    public async Task<Models.Game> CreateGame(Models.Game game)
+    { 
+        var createdGame = await _context.Games.AddAsync(game);
+
+        await _context.SaveChangesAsync();
+
+        return createdGame.Entity;
+    }
 }

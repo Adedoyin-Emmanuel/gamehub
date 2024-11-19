@@ -1,5 +1,3 @@
-using System.ComponentModel.DataAnnotations;
-
 namespace api.Models.Dtos.Game;
 
 
@@ -9,6 +7,8 @@ public record CreateGameDto(
     
     string Description,
     
-    string Genre
+    string Genre,
+    
+    string? ImageUrl
     
 );
