@@ -57,4 +57,11 @@ public class GameController(ILogger<GameController> logger, IMapper mapper, IGam
 
       return Ok(new Response(200, "Game fetched successfully", game));
    }
+
+   [HttpPatch]
+   [Route("{gameId:guid}")]
+   public async Task<IActionResult> UpdateGame(Guid gameId)
+   {
+      
+   }
 }
