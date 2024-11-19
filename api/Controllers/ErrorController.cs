@@ -9,8 +9,8 @@ namespace api.Controllers;
 public class ErrorController : ControllerBase
 {
 
-    [Route("/error")]
-    [AcceptVerbs("GET", "POST", "PUT", "DELETE")]
+    // [Route("/error")]
+    // [AcceptVerbs("GET", "POST", "PUT", "DELETE")]
     public IActionResult Error(int code)
     {
         HttpStatusCode parseCode = (HttpStatusCode)code;
