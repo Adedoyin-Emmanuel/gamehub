@@ -12,11 +12,11 @@ namespace api.Controllers;
 [ApiVersion(1)]
 [ApiController]
 [Route("v{v:apiVersion}/[controller]")]
-public class GameController(ILogger<GameController> logger, IMapper mapper): ControllerBase
+public class GameController(ILogger<GameController> logger, IMapper mapper, IGameRepository gameRepository): ControllerBase
 {
    private readonly ILogger<GameController> _logger = logger;
    private readonly IMapper _mapper = mapper;
-   private readonly IGameRepository _gameRepository;
+   private readonly IGameRepository _gameRepository = gameRepository;
    
    
 
@@ -34,15 +34,10 @@ public class GameController(ILogger<GameController> logger, IMapper mapper): Con
 
       var updatedGame = createGameDto with { ImageUrl = response };
       var game = _mapper.Map<CreateGameDto, Game>(updatedGame);
+      
+      var createdGame = await _gameRepository.CreateGame(game);
 
-      Console.WriteLine(game);
-      
-     // var createdGame = await _gameRepository.CreateGame(game);
-      
-      return Ok(new Response(200, "Games created successfully", new
-      {
-        game
-      }));
+      return Created($"/{ControllerContext.RouteData.Values["controller"]}/{createdGame.Id}", new Response(201, "Game created successfully.", createdGame ));
    }
 
 
