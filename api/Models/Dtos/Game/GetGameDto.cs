@@ -1,6 +1,7 @@
 namespace api.Models.Dtos.Game;
 
-public class GetGameDto
-{
+public record GetGameDto(
+    int Take = 10,
     
-}
+    int? Skip = 0
+);
