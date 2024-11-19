@@ -42,10 +42,10 @@ public class GameController(ILogger<GameController> logger, IMapper mapper, IGam
 
 
    [HttpGet]
-   public async Task<IActionResult> GetGames()
+   public async Task<IActionResult> GetGames([FromQuery] GetGameDto getGameDto)
    {
-            
-      return Ok(new Response(200, "Games fetched successfully"));
+      var allGames = await _gameRepository.GetAllGames(getGameDto.Skip, getGameDto.Take);
+      return Ok(new Response(200, "Games fetched successfully", allGames));
    }
    
 }

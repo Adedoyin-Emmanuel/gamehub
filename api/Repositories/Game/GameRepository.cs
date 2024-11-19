@@ -1,4 +1,5 @@
 using api.Data;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace api.Repositories.Game;
@@ -22,5 +23,16 @@ public class GameRepository : IGameRepository
         await _context.SaveChangesAsync();
 
         return createdGame.Entity;
+    }
+
+    public async Task<List<Models.Game>> GetAllGames(int skip, int take)
+    {
+        var gamesQuery =  _context.Games.AsQueryable();
+
+        var filteredGames = gamesQuery.OrderBy(game=> game.CreatedAt).Skip(skip).Take(take);
+
+        var allGames = await filteredGames.ToListAsync();
+
+        return allGames;
     }
 }
