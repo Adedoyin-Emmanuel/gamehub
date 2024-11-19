@@ -47,5 +47,14 @@ public class GameController(ILogger<GameController> logger, IMapper mapper, IGam
       var allGames = await _gameRepository.GetAllGames(getGameDto.Skip, getGameDto.Take);
       return Ok(new Response(200, "Games fetched successfully", allGames));
    }
-   
+
+
+   [HttpGet]
+   [Route("{gameId:guid}")]
+   public async Task<IActionResult> GetGameById(Guid gameId)
+   {
+      var game = await _gameRepository.GetGameById(gameId);
+
+      return Ok(new Response(200, "Game fetched successfully", game));
+   }
 }

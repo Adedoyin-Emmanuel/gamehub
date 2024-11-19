@@ -35,4 +35,11 @@ public class GameRepository : IGameRepository
 
         return allGames;
     }
+
+    public async Task<Models.Game> GetGameById(Guid gameId)
+    {
+        var game = await _context.Games.FindAsync(gameId);
+
+        return game;
+    }
 }
