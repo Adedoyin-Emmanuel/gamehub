@@ -44,8 +44,7 @@ public class GameController(ILogger<GameController> logger, IMapper mapper, IGam
    [HttpGet]
    public async Task<IActionResult> GetGames()
    {
-      _logger.LogInformation("Getting games...");
-      
+            
       return Ok(new Response(200, "Games fetched successfully"));
    }
    
