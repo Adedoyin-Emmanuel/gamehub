@@ -8,4 +8,5 @@ public interface IGameRepository
    Task<List<Models.Game>> GetAllGames(int skip, int take);
    Task<Models.Game> GetGameById(Guid id);
    Task<bool> UpdateGame(Models.Game game);
+   Task<bool> DeleteGame(Guid id);
 }

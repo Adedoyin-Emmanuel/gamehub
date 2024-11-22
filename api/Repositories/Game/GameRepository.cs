@@ -50,4 +50,14 @@ public class GameRepository : IGameRepository
         return await _context.SaveChangesAsync() > 0;
 
     }
+
+    public async Task<bool> DeleteGame(Guid id)
+    {
+        var existingGame = await _context.Games.FindAsync(id);
+
+         _context.Games.Remove(existingGame);
+
+         return await _context.SaveChangesAsync() > 0;
+        
+    }
 }

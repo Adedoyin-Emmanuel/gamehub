@@ -55,10 +55,16 @@ public class GameController(ILogger<GameController> logger, IMapper mapper, IGam
    {
       var game = await _gameRepository.GetGameById(gameId);
 
+      if (game is null)
+      {
+         return NotFound(new Response(404, "Game not found"))
+            ;
+      }
+
       return Ok(new Response(200, "Game fetched successfully", game));
    }
 
-   [HttpPatch]
+   [HttpPut]
    [Route("{gameId:guid}")]
    public async Task<IActionResult> UpdateGame([FromForm] UpdateGameDto updateGameDto, IFormFile? file, [FromRoute]Guid gameId)
    {
@@ -66,7 +72,7 @@ public class GameController(ILogger<GameController> logger, IMapper mapper, IGam
 
       if (existingGame == null)
       {
-         return BadRequest(new Response(400, "Game not found"));
+         return BadRequest(new Response(404, "Game not found"));
       }
 
       var imageUrl = existingGame.ImageUrl;
@@ -94,5 +100,27 @@ public class GameController(ILogger<GameController> logger, IMapper mapper, IGam
       }
       
       return Ok(new Response(200, "Game updated successfully", existingGame));
+   }
+
+   [HttpDelete]
+   [Route("{gameId:guid}")]
+
+   public async Task<IActionResult> DeleteGame(Guid gameId)
+   {
+      var existingGame = await _gameRepository.GetGameById(gameId);
+
+      if (existingGame == null)
+      {
+         return BadRequest(new Response(404, "Game not found"));
+      }
+
+      var isDeleted = await _gameRepository.DeleteGame(gameId);
+
+      if (!isDeleted)
+      {
+         return BadRequest(new Response(500, "Failed to delete game"));
+      }
+      
+      return Ok(new Response(200, "Game deleted successfully"));
    }
 }
