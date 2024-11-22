@@ -42,4 +42,12 @@ public class GameRepository : IGameRepository
 
         return game;
     }
+
+    public async Task<bool> UpdateGame(Models.Game game)
+    {
+        _context.Games.Update(game);
+
+        return await _context.SaveChangesAsync() > 0;
+
+    }
 }

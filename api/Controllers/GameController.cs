@@ -82,16 +82,17 @@ public class GameController(ILogger<GameController> logger, IMapper mapper, IGam
 
          imageUrl = response;
       }
-      var updatedGame = updateGameDto with { ImageUrl = imageUrl };
       
-      Console.WriteLine(imageUrl);
-     
-      Console.WriteLine(gameId);
-      
-      Console.WriteLine(updateGameDto);
-      
-      Console.WriteLine(file);   
+      updateGameDto = updateGameDto with { ImageUrl = imageUrl };
+      _mapper.Map(updateGameDto, existingGame);
 
-      return Ok();
+      var isUpdated = await gameRepository.UpdateGame(existingGame);
+
+      if (!isUpdated)
+      {
+         return BadRequest(new Response(400, "Failed to update game"));
+      }
+      
+      return Ok(new Response(200, "Game updated successfully", existingGame));
    }
 }
