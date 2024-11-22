@@ -18,9 +18,9 @@ public class GameController(ILogger<GameController> logger, IMapper mapper, IGam
    private readonly IMapper _mapper = mapper;
    private readonly IGameRepository _gameRepository = gameRepository;
    
-   
 
 
+ 
    [HttpPost] 
    public async Task<IActionResult> Create([FromForm] CreateGameDto createGameDto,  IFormFile file)
    {
@@ -60,8 +60,38 @@ public class GameController(ILogger<GameController> logger, IMapper mapper, IGam
 
    [HttpPatch]
    [Route("{gameId:guid}")]
-   public async Task<IActionResult> UpdateGame(Guid gameId)
+   public async Task<IActionResult> UpdateGame([FromForm] UpdateGameDto updateGameDto, IFormFile? file, [FromRoute]Guid gameId)
    {
+      var existingGame = await _gameRepository.GetGameById(gameId);
+
+      if (existingGame == null)
+      {
+         return BadRequest(new Response(400, "Game not found"));
+      }
+
+      var imageUrl = existingGame.ImageUrl;
       
+      if (file is not null)
+      {
+         var (isSuccess, response) = FileUploadHandler.Upload(file);
+
+         if (!isSuccess)
+         {
+            return BadRequest(new Response(400, response));
+         }
+
+         imageUrl = response;
+      }
+      var updatedGame = updateGameDto with { ImageUrl = imageUrl };
+      
+      Console.WriteLine(imageUrl);
+     
+      Console.WriteLine(gameId);
+      
+      Console.WriteLine(updateGameDto);
+      
+      Console.WriteLine(file);   
+
+      return Ok();
    }
 }

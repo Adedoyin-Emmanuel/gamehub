@@ -9,6 +9,8 @@ public class MappingProfile : Profile
 
     public MappingProfile()
     {
-        CreateMap<CreateGameDto, Game>();   
+        CreateMap<CreateGameDto, Game>();
+
+        CreateMap<UpdateGameDto, Game>().ForAllMembers(opts => opts.Condition((src, dest, srcMember)=> srcMember != null));
     }
 }
