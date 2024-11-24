@@ -15,7 +15,7 @@ export const Loader = ({ isLoading, size = 27 }: LoaderProps) => {
         )}
       ></div>
       <div className="w-screen h-screen flex items-center justify-center fixed ">
-        <ClipLoader loading={isLoading} color="#5A83ED" size={size} />
+        <ClipLoader loading={isLoading} color="#000" size={size} />
       </div>
     </>
   );
