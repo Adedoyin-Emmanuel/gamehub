@@ -66,6 +66,7 @@ const Home = () => {
                 name={game.name}
                 imageUrl={game.imageUrl}
                 genre={game.genre}
+                gameId={_i.toString()}
               />
             );
           })}
