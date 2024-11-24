@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/dialog";
 import { PencilIcon, TrashIcon, CalendarIcon } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Pen } from "lucide-react";
+import GameImageUpload from "@/components/game-image-upload";
 
 dayjs.extend(relativeTime);
 
@@ -41,10 +41,7 @@ const GamePage = () => {
                   alt="Game Thumbnail"
                   className="w-48 h-48 rounded-full object-cover"
                 />
-
-                <div className="border rounded-full h-10 w-10 flex items-center justify-center absolute transform -translate-y-12 translate-x-36 bg-white cursor-pointer">
-                  <Pen strokeWidth={1} height={20} />
-                </div>
+                <GameImageUpload gameId="12345" />
               </div>
 
               <h1 className="text-3xl font-bold mt-8">{game.title}</h1>
