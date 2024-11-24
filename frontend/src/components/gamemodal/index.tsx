@@ -12,8 +12,15 @@ import {
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { UploadCloud } from "lucide-react";
+import { Axios } from "@/config/axios";
+import { useQuery } from "@tanstack/react-query";
 
 const GameModal = () => {
+  const handleGameCreation = async () => {
+    
+  }
+
+  
   return (
     <Dialog>
       <DialogTrigger>
