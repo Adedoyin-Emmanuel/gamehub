@@ -1,7 +1,10 @@
 import Game from "@/components/game";
 import Navbar from "@/components/navbar";
+import { Axios } from "@/config/axios";
+import { useQuery } from "@tanstack/react-query";
 
 const Home = () => {
+
   const games = [
     {
       name: "CODM",
@@ -51,6 +54,14 @@ const Home = () => {
       genre: "action",
     },
   ];
+
+  const getAllGames = async () => {
+    try {
+      
+    } catch (error) {
+      
+    }
+  }
   return (
     <div className="w-full">
       <Navbar />
@@ -59,7 +70,7 @@ const Home = () => {
         <h2 className="text-2xl font-semibold">All Games</h2>
         <br />
         <div className="mx-auto flex flex-wrap gap-5">
-          {games.map((game, _i) => {
+          {/* {games.map((game, _i) => {
             return (
               <Game
                 key={_i}
@@ -69,7 +80,7 @@ const Home = () => {
                 gameId={_i.toString()}
               />
             );
-          })}
+          })} */}
         </div>
       </div>
     </div>
