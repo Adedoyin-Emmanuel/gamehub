@@ -1,17 +1,14 @@
 
-"use client"
 import React from "react";
-import { useRouter, usePathname } from "next/navigation";
-
+import {Link, useNavigate} from "react-router-dom";
 
 const Game = () => {
 
-    const pathname = usePathname();
+    const navigateTo = useNavigate();
 
     return (
         <div>
             <h1>Game works!</h1>
-            <p>Current pathname: {pathname}</p>
         </div>
     );  
 }

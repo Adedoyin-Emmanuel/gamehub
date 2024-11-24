@@ -1,6 +1,7 @@
 import "./App.css";
 import Navbar from "@/components/navbar";
 import Game from "@/components/game";
+import game from "./pages/game";
 
 function App() {
   const games = [
