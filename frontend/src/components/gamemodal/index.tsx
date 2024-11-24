@@ -9,6 +9,7 @@ import {
   DialogTrigger,
   DialogFooter,
 } from "@/components/ui/dialog";
+import { Input } from "../ui/input";
 
 const GameModal = () => {
   return (
@@ -24,6 +25,18 @@ const GameModal = () => {
           <DialogTitle>Add Game</DialogTitle>
           <DialogDescription>Add a new game</DialogDescription>
         </DialogHeader>
+
+        <div className="w-full">
+          <div className="my-2">
+            <label htmlFor="name">Name</label>
+            <Input id="name" />
+          </div>
+
+          <div className="my-2">
+            <label htmlFor="name">Name</label>
+            <Input id="name" />
+          </div>
+        </div>
         <DialogFooter>
           <Button type="submit">Submit</Button>
         </DialogFooter>
