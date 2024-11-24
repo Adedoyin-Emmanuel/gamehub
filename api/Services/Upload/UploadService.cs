@@ -21,14 +21,14 @@ public class UploadService : IUploadService
         }
         
         string fileName = Guid.NewGuid().ToString() + "_" + extension;
+        string uploadPathToReturn = $"/uploads/{fileName}";
         string path = Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
 
         string fileDestination = Path.Combine(path, fileName);
-        Console.WriteLine(fileDestination);
         using FileStream fileStream = new FileStream(fileDestination, FileMode.Create);
 
         file.CopyTo(fileStream);
         
-        return (true, fileDestination);
+        return (true, uploadPathToReturn);
     }
 }

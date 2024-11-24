@@ -6,7 +6,7 @@ using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using api.Services.Upload;
-
+using Microsoft.Extensions.FileProviders;
 
 
 DotEnv.Load();
@@ -16,8 +16,7 @@ var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
 var mysqlServerServerVersion = new MySqlServerVersion(new Version(8, 0, 36));
 const string corsPolicy="AllowSpecificOrigin";
 var allowedOrigin = Environment.GetEnvironmentVariable("ALLOWED_ORIGIN");
-
-Console.WriteLine($"Allowed Origins: {allowedOrigin}");
+var uploadPaths = Path.Combine(builder.Environment.ContentRootPath, "Uploads");
 
 {
 
@@ -61,6 +60,12 @@ Console.WriteLine($"Allowed Origins: {allowedOrigin}");
         app.UseSwagger();
         app.UseSwaggerUI();
     }
+    
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = new PhysicalFileProvider(uploadPaths),
+        RequestPath = "/uploads"
+    });
     
     app.MapControllers();
 
