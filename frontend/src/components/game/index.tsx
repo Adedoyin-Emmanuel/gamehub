@@ -8,11 +8,12 @@ interface GameProps {
 }
 
 const Game = ({ name, imageUrl, genre, gameId }: GameProps) => {
+  const legitImageUrl = `${import.meta.env.VITE_API_URL}${imageUrl}`;
   return (
     <Link to={`/${gameId}`}>
       <div className="border rounded-md md:w-48 cursor-pointer">
         <img
-          src={imageUrl}
+          src={legitImageUrl}
           alt={`Image relating to ${name}`}
           className="rounded-t-md"
         />

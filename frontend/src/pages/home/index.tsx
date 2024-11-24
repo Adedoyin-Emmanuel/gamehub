@@ -6,6 +6,12 @@ import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import Loader from "@/components/loader";
 
+interface IGame {
+  name: string;
+  imageUrl: string;
+  genre: string;
+  id: string;
+}
 const Home = () => {
   const [skip, setSkip] = React.useState(0);
   const [take, setTake] = React.useState(10);
@@ -33,22 +39,29 @@ const Home = () => {
         <h2 className="text-2xl font-semibold">All Games</h2>
         <br />
 
-        {error && <h2 className="capitalize text-center">{error.message}</h2>}
+        {error && (
+          <h2 className="capitalize text-center mx-auto">{error.message}</h2>
+        )}
 
         {isPending && <Loader isLoading={isPending} />}
 
         <div className="mx-auto flex flex-wrap gap-5">
-          {/* {games.map((game, _i) => {
-            return (
-              <Game
-                key={_i}
-                name={game.name}
-                imageUrl={game.imageUrl}
-                genre={game.genre}
-                gameId={_i.toString()}
-              />
-            );
-          })} */}
+          {!isPending &&
+            data.map((game: IGame, _i: number) => {
+              return (
+                <Game
+                  key={_i}
+                  name={game.name}
+                  imageUrl={game.imageUrl}
+                  genre={game.genre}
+                  gameId={game.id}
+                />
+              );
+            })}
+
+          {!isPending && data.length == 0 && (
+            <h3 className="text-center capitalize mx-auto">No games found!</h3>
+          )}
         </div>
       </div>
     </div>
