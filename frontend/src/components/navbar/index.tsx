@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Button } from "../ui/button";
+import GameModal from "../gamemodal";
 const Navbar = () => {
   return (
     <div className={"w-full border p-3 flex items-center justify-between"}>
@@ -7,7 +7,7 @@ const Navbar = () => {
         <h2 className={"text-2xl font-bold"}>Gamehub</h2>
       </Link>
 
-      <Button>Add new game</Button>
+      <GameModal />
     </div>
   );
 };
