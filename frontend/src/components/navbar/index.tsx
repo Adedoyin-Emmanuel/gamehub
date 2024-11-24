@@ -1,18 +1,9 @@
-
-import React from "react";
-
-interface NavbarProps {
-    
-}
-
 const Navbar = () => {
-
-    return (
-        <div>
-            <h1>Navbar works!</h1>
-        </div>
-    );  
-}
+  return (
+    <div className={"bg-gray-200 p-3"}>
+      <h2 className={"text-2xl font-bold"}>Gamehub</h2>
+    </div>
+  );
+};
 
 export default Navbar;
-    
