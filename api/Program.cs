@@ -5,6 +5,7 @@ using dotenv.net;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
+using api.Services.Upload;
 
 
 
@@ -17,6 +18,7 @@ var mysqlServerServerVersion = new MySqlServerVersion(new Version(8, 0, 36));
 {
 
     builder.Services.AddScoped<IGameRepository, GameRepository>();
+    builder.Services.AddScoped<IUploadService, UploadService>();
     builder.Services.AddControllers();
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();

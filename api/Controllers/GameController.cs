@@ -1,22 +1,25 @@
 using Microsoft.AspNetCore.Mvc;
+using Asp.Versioning;
+using AutoMapper;
+using api.Repositories.Game;
+using api.Models.Dtos.Game;
 using api.Extensions;
 using api.Models;
-using Asp.Versioning;
-using api.Models.Dtos.Game;
-using api.Repositories.Game;
-using AutoMapper;
-using api.Utils;
+using api.Services.Upload;
+
 namespace api.Controllers;
+
 
 
 [ApiVersion(1)]
 [ApiController]
 [Route("v{v:apiVersion}/[controller]")]
-public class GameController(ILogger<GameController> logger, IMapper mapper, IGameRepository gameRepository): ControllerBase
+public class GameController(ILogger<GameController> logger, IMapper mapper, IGameRepository gameRepository, IUploadService uploadService): ControllerBase
 {
    private readonly ILogger<GameController> _logger = logger;
    private readonly IMapper _mapper = mapper;
    private readonly IGameRepository _gameRepository = gameRepository;
+   private readonly IUploadService _uploadService = uploadService;
    
 
 
@@ -24,7 +27,7 @@ public class GameController(ILogger<GameController> logger, IMapper mapper, IGam
    [HttpPost] 
    public async Task<IActionResult> Create([FromForm] CreateGameDto createGameDto,  IFormFile file)
    {
-      var (isSuccess, response) = FileUploadHandler.Upload(file);
+      var (isSuccess, response) = _uploadService.Upload(file);
 
       if (!isSuccess)
       {
@@ -79,7 +82,7 @@ public class GameController(ILogger<GameController> logger, IMapper mapper, IGam
       
       if (file is not null)
       {
-         var (isSuccess, response) = FileUploadHandler.Upload(file);
+         var (isSuccess, response) = _uploadService.Upload(file);
 
          if (!isSuccess)
          {
