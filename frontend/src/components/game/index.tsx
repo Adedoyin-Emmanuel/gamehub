@@ -1,3 +1,4 @@
+import { Badge } from "../ui/badge";
 interface GameProps {
   name: string;
   imageUrl: string;
@@ -6,16 +7,18 @@ interface GameProps {
 
 const Game = ({ name, imageUrl, genre }: GameProps) => {
   return (
-    <div className="border rounded-md w-48">
+    <div className="border rounded-md md:w-48 cursor-pointer">
       <img
         src={imageUrl}
         alt={`Image relating to ${name}`}
         className="rounded-t-md"
       />
 
-      <div>
-        <p className="font-semibold py-2">{name}</p>
-        <p className="capitalize py-3">{genre}</p>
+      <div className="flex items-center justify-between p-1">
+        <p className="font-semibold py-2 truncate">{name}</p>
+        <Badge className="capitalize" variant={"outline"}>
+          {genre}
+        </Badge>
       </div>
     </div>
   );
