@@ -1,7 +1,9 @@
 import "./App.css";
 import Navbar from "@/components/navbar";
 import Game from "@/components/game";
-import game from "./pages/game";
+import GamePage from "./pages/game";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import home from "./pages/home";
 
 function App() {
   const games = [
@@ -54,26 +56,11 @@ function App() {
     },
   ];
   return (
-    <div className="w-full">
-      <Navbar />
-      <br />
-      <div className="mx-auto md:w-[900px] w-11/12">
-        <h2 className="text-2xl font-semibold">All Games</h2>
-        <br />
-        <div className="mx-auto flex flex-wrap gap-5">
-          {games.map((game, _i) => {
-            return (
-              <Game
-                key={_i}
-                name={game.name}
-                imageUrl={game.imageUrl}
-                genre={game.genre}
-              />
-            );
-          })}
-        </div>
-      </div>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route element={ } />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
