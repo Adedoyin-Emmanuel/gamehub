@@ -14,6 +14,10 @@ DotEnv.Load();
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = Environment.GetEnvironmentVariable("DATABASE_URL");
 var mysqlServerServerVersion = new MySqlServerVersion(new Version(8, 0, 36));
+const string corsPolicy="AllowSpecificOrigin";
+var allowedOrigin = Environment.GetEnvironmentVariable("ALLOWED_ORIGIN");
+
+Console.WriteLine($"Allowed Origins: {allowedOrigin}");
 
 {
 
@@ -39,25 +43,33 @@ var mysqlServerServerVersion = new MySqlServerVersion(new Version(8, 0, 36));
     builder.Services.AddAutoMapper(typeof(Program).Assembly);
     builder.Services.AddFluentValidationAutoValidation();
     builder.Services.AddValidatorsFromAssemblyContaining<Program>();
+    builder.Services.AddCors(options => options.AddPolicy(corsPolicy, policy =>
+    {
+        policy.WithOrigins(allowedOrigin)
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials();
+    }));
 
 }
 
 {
     var app = builder.Build();
-
-
+    
     if (app.Environment.IsDevelopment())
     {
         app.UseSwagger();
         app.UseSwaggerUI();
     }
-
+    
     app.MapControllers();
 
     app.UseHttpsRedirection();
+    
+    app.UseCors(corsPolicy);
 
     app.UseAuthorization();
-
+    
     app.UseExceptionHandler("/error/500");
 
     app.UseStatusCodePagesWithReExecute("/error/{0}");
