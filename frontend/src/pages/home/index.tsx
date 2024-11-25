@@ -94,7 +94,7 @@ const Home = () => {
           )}
         </div>
         <br />
-        
+
         {totalPages > 1 && (
           <div className="flex justify-center mt-6">
             <Pagination>
