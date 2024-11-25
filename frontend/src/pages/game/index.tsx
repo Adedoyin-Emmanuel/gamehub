@@ -11,6 +11,13 @@ import {
   DialogTrigger,
   DialogFooter,
 } from "@/components/ui/dialog";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { PencilIcon, TrashIcon, CalendarIcon } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import GameImageUpload from "@/components/game-image-upload";
@@ -19,11 +26,57 @@ import toast from "react-hot-toast";
 import { Axios } from "@/config/axios";
 import { useQuery } from "@tanstack/react-query";
 import Loader from "@/components/loader";
+import { Textarea } from "@/components/ui/textarea";
+import { Input } from "@/components/ui/input";
+import React from "react";
+import { useQueryClient } from "@tanstack/react-query";
+import { Badge } from "@/components/ui/badge";
 
 dayjs.extend(relativeTime);
 
 const GamePage = () => {
   const { gameId } = useParams();
+
+  const [errors, setErrors] = React.useState<Record<string, string[]>>({});
+  const [dialogOpened, setDialogOpened] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
+  const queryClient = useQueryClient();
+
+  const genres = [
+    "Action",
+    "Adventure",
+    "RPG",
+    "Strategy",
+    "Simulation",
+    "Sports",
+    "Racing",
+    "Fighting",
+    "Puzzle",
+    "Shooter",
+    "Platform",
+    "Horror",
+    "MMORPG",
+    "Battle Royale",
+    "Card Game",
+    "Educational",
+  ];
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+    if (errors[name]) {
+      setErrors({ ...errors, [name]: [] });
+    }
+  };
+
+  const handleGenreChange = (value: string) => {
+    setFormData({ ...formData, genre: value });
+    if (errors.Genre) {
+      setErrors({ ...errors, Genre: [] });
+    }
+  };
 
   const getGameDetails = async () => {
     try {
@@ -41,6 +94,47 @@ const GamePage = () => {
     queryKey: ["GetGameDetails", gameId],
     queryFn: getGameDetails,
   });
+
+  const [formData, setFormData] = React.useState({
+    name: data?.name,
+    description: data?.description,
+    genre: data?.genre,
+  });
+
+  const handleGameUpdate = async () => {
+    try {
+      setIsLoading(true);
+      setErrors({});
+
+      const dataToSend = new FormData();
+      dataToSend.append("name", formData.name);
+      dataToSend.append("description", formData.description);
+      dataToSend.append("genre", formData.genre);
+
+      await Axios.put(`/game/${gameId}`, dataToSend);
+      toast.success("Game created successfully!");
+      setDialogOpened(false);
+
+      queryClient.invalidateQueries({ queryKey: ["GetGameDetails", gameId] });
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      console.log(error);
+
+      if (error.response?.data?.errors) {
+        setErrors(error.response.data.errors);
+
+        const firstErrorKey = Object.keys(error.response.data.errors)[0];
+        const firstError = error.response.data.errors[firstErrorKey][0];
+        toast.error(firstError);
+      } else {
+        toast.error(
+          error.response?.data?.title || "An error occurred while updating game"
+        );
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div className="min-h-screen">
@@ -70,6 +164,10 @@ const GamePage = () => {
                   {data.description}
                 </p>
 
+                <p className="text-gray-600 mt-4 max-w-2xl">
+                  <Badge variant={"outline"}> {data.genre}</Badge>
+                </p>
+
                 <div className="mt-6 flex items-center space-x-6 text-sm text-gray-500">
                   <div className="flex items-center">
                     <CalendarIcon className="h-4 w-4 mr-2" />
@@ -85,7 +183,7 @@ const GamePage = () => {
               <br />
 
               <div className="w-full flex items-center justify-between">
-                <Dialog>
+                <Dialog open={dialogOpened} onOpenChange={setDialogOpened}>
                   <DialogTrigger asChild>
                     <Button size="sm" variant="secondary">
                       <PencilIcon className="h-4 w-4 mr-2" />
@@ -96,12 +194,90 @@ const GamePage = () => {
                     <DialogHeader>
                       <DialogTitle>Edit Game</DialogTitle>
                       <DialogDescription>
-                        Make changes to your game here. Click save when you're
+                        Make changes to your game here. Click update when you're
                         done.
                       </DialogDescription>
                     </DialogHeader>
+                    <div>
+                      <div className="my-2">
+                        <label
+                          htmlFor="name"
+                          className="block text-sm font-medium text-gray-700"
+                        >
+                          Name
+                        </label>
+                        <Input
+                          id="name"
+                          name="name"
+                          value={formData.name}
+                          onChange={handleInputChange}
+                        />
+                        {errors.Name && (
+                          <p className="text-sm text-red-500 mt-1">
+                            {errors.Name[0]}
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="my-2 space-y-2">
+                        <label
+                          htmlFor="description"
+                          className="block text-sm font-medium text-gray-700"
+                        >
+                          Description
+                        </label>
+                        <Textarea
+                          rows={5}
+                          name="description"
+                          value={formData.description}
+                          onChange={handleInputChange}
+                        />
+                        {errors.Description && (
+                          <p className="text-sm text-red-500 mt-1">
+                            {errors.Description[0]}
+                          </p>
+                        )}
+                      </div>
+
+                      <div className="my-2 space-y-2">
+                        <label className="block text-sm font-medium text-gray-700">
+                          Genre
+                        </label>
+                        <Select
+                          value={formData.genre}
+                          onValueChange={handleGenreChange}
+                        >
+                          <SelectTrigger>
+                            <SelectValue placeholder="Select a genre" />
+                          </SelectTrigger>
+                          <SelectContent>
+                            {genres.map((genre) => (
+                              <SelectItem
+                                key={genre}
+                                value={genre.toLowerCase()}
+                              >
+                                {genre}
+                              </SelectItem>
+                            ))}
+                          </SelectContent>
+                        </Select>
+                        {errors.Genre && (
+                          <p className="text-sm text-red-500 mt-1">
+                            {errors.Genre[0]}
+                          </p>
+                        )}
+                      </div>
+                    </div>
                     <DialogFooter>
-                      <Button type="submit">Save changes</Button>
+                      <Button
+                        type="submit"
+                        className="w-full"
+                        disabled={isLoading}
+                        onClick={handleGameUpdate}
+                      >
+                        <Loader isLoading={isLoading} color="#fff" size={20} />
+                        {isLoading ? "Loading" : "Update"}
+                      </Button>
                     </DialogFooter>
                   </DialogContent>
                 </Dialog>
