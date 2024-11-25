@@ -7,11 +7,16 @@ public class UpdateGameValidator : AbstractValidator<UpdateGameDto>
 {
     public UpdateGameValidator()
     {
-        RuleFor(game => game.Name).NotEmpty().When(game => game.Name != string.Empty).MaximumLength(30);
+        RuleFor(game => game.Name)
+            .MaximumLength(30)
+            .When(game => game.Name != null);
 
-        RuleFor(game => game.Description).NotEmpty().When(game => game.Description != string.Empty).MaximumLength(1200);
+        RuleFor(game => game.Description)
+            .MaximumLength(1200)
+            .When(game => game.Description != null);
         
-        RuleFor(game => game.Genre).NotEmpty().When(game => game.Genre != string.Empty).MaximumLength(20);
-        
+        RuleFor(game => game.Genre)
+            .MaximumLength(20)
+            .When(game => game.Genre != null);
     }
 }
