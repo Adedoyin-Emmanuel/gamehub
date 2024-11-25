@@ -39,9 +39,9 @@ public class GameRepository : IGameRepository
         return new PaginatedResult<Models.Game>
         {
             Total = totalGames,
-            Data = allGames,
             Skip = skip,
-            Take = take
+            Take = take,
+            Items = allGames,
         };
     }
 
