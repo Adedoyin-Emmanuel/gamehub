@@ -1,4 +1,5 @@
 using api.Data;
+using api.Utils;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -25,15 +26,23 @@ public class GameRepository : IGameRepository
         return createdGame.Entity;
     }
 
-    public async Task<List<Models.Game>> GetAllGames(int skip, int take)
+    public async Task<PaginatedResult<Models.Game>> GetAllGames(int skip, int take)
     {
         var gamesQuery =  _context.Games.AsQueryable();
-
+        
+        int totalGames = await _context.Games.CountAsync();
+        
         var filteredGames = gamesQuery.OrderBy(game=> game.CreatedAt).Skip(skip).Take(take);
 
         var allGames = await filteredGames.ToListAsync();
 
-        return allGames;
+        return new PaginatedResult<Models.Game>
+        {
+            Total = totalGames,
+            Data = allGames,
+            Skip = skip,
+            Take = take
+        };
     }
 
     public async Task<Models.Game> GetGameById(Guid gameId)
