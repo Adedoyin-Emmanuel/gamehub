@@ -33,6 +33,7 @@ const GameModal = () => {
   const [selectedFile, setSelectedFile] = React.useState<File | null>(null);
   const [isLoading, setIsLoading] = React.useState(false);
   const [errors, setErrors] = React.useState<Record<string, string[]>>({});
+  const [dialogOpened, setDialogOpened] = React.useState(false);
 
   const genres = [
     "Action",
@@ -58,7 +59,6 @@ const GameModal = () => {
   ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-    // Clear error when user starts typing
     if (errors[name]) {
       setErrors({ ...errors, [name]: [] });
     }
@@ -66,7 +66,6 @@ const GameModal = () => {
 
   const handleGenreChange = (value: string) => {
     setFormData({ ...formData, genre: value });
-    // Clear error when user selects a genre
     if (errors.Genre) {
       setErrors({ ...errors, Genre: [] });
     }
@@ -81,7 +80,7 @@ const GameModal = () => {
   const handleGameCreation = async () => {
     try {
       setIsLoading(true);
-      setErrors({}); // Clear previous errors
+      setErrors({});
 
       const dataToSend = new FormData();
       dataToSend.append("name", formData.name);
@@ -95,19 +94,20 @@ const GameModal = () => {
       const response = await Axios.post("/game", dataToSend);
       console.log(response.data);
       toast.success("Game created successfully!");
+      setDialogOpened(false);
+      setFormData({ name: "", description: "", genre: "" });
+      setSelectedFile(null);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.log(error);
 
       if (error.response?.data?.errors) {
-        // Handle validation errors from ASP.NET
         setErrors(error.response.data.errors);
 
-        // Show the first error message in a toast
         const firstErrorKey = Object.keys(error.response.data.errors)[0];
         const firstError = error.response.data.errors[firstErrorKey][0];
         toast.error(firstError);
       } else {
-        // Handle other types of errors
         toast.error(
           error.response?.data?.title || "An error occurred while creating game"
         );
@@ -118,7 +118,7 @@ const GameModal = () => {
   };
 
   return (
-    <Dialog>
+    <Dialog open={dialogOpened} onOpenChange={setDialogOpened}>
       <DialogTrigger>
         <Button>
           <Plus className="h-4 w-4 mr-2" />

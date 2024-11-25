@@ -12,9 +12,10 @@ interface IGame {
   genre: string;
   id: string;
 }
+
 const Home = () => {
-  const [skip, setSkip] = React.useState(0);
-  const [take, setTake] = React.useState(10);
+  // const [skip, setSkip] = React.useState(0);
+  // const [take, setTake] = React.useState(10);
 
   const getAllGames = async () => {
     try {
@@ -22,7 +23,7 @@ const Home = () => {
       return response.data.data;
     } catch (error: unknown) {
       console.log(error);
-      toast.error("An error occured");
+      toast.error("An error occurred");
     }
   };
 
@@ -45,7 +46,7 @@ const Home = () => {
 
         {isPending && <Loader isLoading={isPending} />}
 
-        <div className="mx-auto flex flex-wrap gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {!isPending &&
             data.map((game: IGame, _i: number) => {
               return (
@@ -59,7 +60,7 @@ const Home = () => {
               );
             })}
 
-          {!isPending && data.length == 0 && (
+          {!isPending && data.length === 0 && (
             <h3 className="text-center capitalize mx-auto">No games found!</h3>
           )}
         </div>
