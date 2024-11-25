@@ -91,8 +91,7 @@ const GameModal = () => {
         dataToSend.append("file", selectedFile);
       }
 
-      const response = await Axios.post("/game", dataToSend);
-      console.log(response.data);
+      await Axios.post("/game", dataToSend);
       toast.success("Game created successfully!");
       setDialogOpened(false);
       setFormData({ name: "", description: "", genre: "" });

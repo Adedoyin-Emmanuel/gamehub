@@ -38,7 +38,7 @@ const GamePage = () => {
   };
 
   const { data, isPending, error } = useQuery({
-    queryKey: ["GetGameDetails"],
+    queryKey: ["GetGameDetails", gameId],
     queryFn: getGameDetails,
   });
 
@@ -61,7 +61,7 @@ const GamePage = () => {
                     alt="Game Thumbnail"
                     className="w-48 h-48 rounded-full object-cover"
                   />
-                  <GameImageUpload gameId="12345" />
+                  <GameImageUpload gameId={gameId as string} />
                 </div>
 
                 <h1 className="text-3xl font-bold mt-8">{data.name}</h1>
