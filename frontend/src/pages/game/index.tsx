@@ -19,7 +19,11 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { PencilIcon, TrashIcon, CalendarIcon } from "lucide-react";
+import {
+  PencilIcon,
+  TrashIcon,
+  CalendarIcon,
+} from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import GameImageUpload from "@/components/game-image-upload";
 import { useParams } from "react-router-dom";
@@ -39,7 +43,7 @@ const GamePage = () => {
   const { gameId } = useParams();
 
   const [errors, setErrors] = React.useState<Record<string, string[]>>({});
-  const [dialogOpened, setDialogOpened] = React.useState(false);
+  const [isEditDialogOpened, setIsEditDialogOpened] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [isDeleteActionLoading, setIsDeleteActionLoading] =
     React.useState(false);
@@ -101,10 +105,20 @@ const GamePage = () => {
   });
 
   const [formData, setFormData] = React.useState({
-    name: data?.name,
-    description: data?.description,
-    genre: data?.genre,
+    name: "",
+    description: "",
+    genre: "",
   });
+
+  React.useEffect(() => {
+    if (data) {
+      setFormData({
+        name: data.name,
+        description: data.description,
+        genre: data.genre,
+      });
+    }
+  }, [data]);
 
   const handleGameUpdate = async () => {
     try {
@@ -118,7 +132,7 @@ const GamePage = () => {
 
       await Axios.put(`/game/${gameId}`, dataToSend);
       toast.success("Game created successfully!");
-      setDialogOpened(false);
+      setIsEditDialogOpened(false);
 
       queryClient.invalidateQueries({ queryKey: ["GetGameDetails", gameId] });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -191,9 +205,9 @@ const GamePage = () => {
                   {data.description}
                 </p>
 
-                <p className="text-gray-600 mt-4 max-w-2xl">
+                <div className="text-gray-600 mt-4 max-w-2xl">
                   <Badge variant={"outline"}> {data.genre}</Badge>
-                </p>
+                </div>
 
                 <div className="mt-6 flex items-center space-x-6 text-sm text-gray-500">
                   <div className="flex items-center">
@@ -210,7 +224,10 @@ const GamePage = () => {
               <br />
 
               <div className="w-full flex items-center justify-between">
-                <Dialog open={dialogOpened} onOpenChange={setDialogOpened}>
+                <Dialog
+                  open={isEditDialogOpened}
+                  onOpenChange={setIsEditDialogOpened}
+                >
                   <DialogTrigger asChild>
                     <Button size="sm" variant="secondary">
                       <PencilIcon className="h-4 w-4 mr-2" />
@@ -328,7 +345,6 @@ const GamePage = () => {
                       </DialogDescription>
                     </DialogHeader>
                     <DialogFooter className="flex gap-3">
-                      
                       <DialogClose asChild>
                         <Button variant="outline">Cancel</Button>
                       </DialogClose>

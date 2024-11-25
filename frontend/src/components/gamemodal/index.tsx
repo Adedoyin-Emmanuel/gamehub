@@ -124,7 +124,7 @@ const GameModal = () => {
 
   return (
     <Dialog open={dialogOpened} onOpenChange={setDialogOpened}>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button>
           <Plus className="h-4 w-4 mr-2" />
           Add game
@@ -136,88 +136,84 @@ const GameModal = () => {
           <DialogDescription>Add a new game</DialogDescription>
         </DialogHeader>
 
-        <div>
-          <div className="my-2">
-            <label
-              htmlFor="name"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Name
-            </label>
-            <Input
-              id="name"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-            />
-            {errors.Name && (
-              <p className="text-sm text-red-500 mt-1">{errors.Name[0]}</p>
-            )}
-          </div>
+        <div className="my-2">
+          <label
+            htmlFor="name"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Name
+          </label>
+          <Input
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleInputChange}
+          />
+          {errors.Name && (
+            <p className="text-sm text-red-500 mt-1">{errors.Name[0]}</p>
+          )}
+        </div>
 
-          <div className="my-2 space-y-2">
-            <label
-              htmlFor="description"
-              className="block text-sm font-medium text-gray-700"
-            >
-              Description
-            </label>
-            <Textarea
-              rows={5}
-              name="description"
-              value={formData.description}
-              onChange={handleInputChange}
-            />
-            {errors.Description && (
-              <p className="text-sm text-red-500 mt-1">
-                {errors.Description[0]}
-              </p>
-            )}
-          </div>
+        <div className="my-2 space-y-2">
+          <label
+            htmlFor="description"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Description
+          </label>
+          <Textarea
+            rows={5}
+            name="description"
+            value={formData.description}
+            onChange={handleInputChange}
+          />
+          {errors.Description && (
+            <p className="text-sm text-red-500 mt-1">{errors.Description[0]}</p>
+          )}
+        </div>
 
-          <div className="my-2 space-y-2">
-            <label className="block text-sm font-medium text-gray-700">
-              Genre
-            </label>
-            <Select value={formData.genre} onValueChange={handleGenreChange}>
-              <SelectTrigger>
-                <SelectValue placeholder="Select a genre" />
-              </SelectTrigger>
-              <SelectContent>
-                {genres.map((genre) => (
-                  <SelectItem key={genre} value={genre.toLowerCase()}>
-                    {genre}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-            {errors.Genre && (
-              <p className="text-sm text-red-500 mt-1">{errors.Genre[0]}</p>
-            )}
-          </div>
+        <div className="my-2 space-y-2">
+          <label className="block text-sm font-medium text-gray-700">
+            Genre
+          </label>
+          <Select value={formData.genre} onValueChange={handleGenreChange}>
+            <SelectTrigger>
+              <SelectValue placeholder="Select a genre" />
+            </SelectTrigger>
+            <SelectContent>
+              {genres.map((genre) => (
+                <SelectItem key={genre} value={genre.toLowerCase()}>
+                  {genre}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          {errors.Genre && (
+            <p className="text-sm text-red-500 mt-1">{errors.Genre[0]}</p>
+          )}
+        </div>
 
-          <div className="my-2 space-y-2">
-            <label className="block text-sm font-medium text-gray-700">
-              Image
+        <div className="my-2 space-y-2">
+          <label className="block text-sm font-medium text-gray-700">
+            Image
+          </label>
+          <div className="flex items-center">
+            <label className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
+              <UploadCloud className="w-5 h-5 text-gray-500" />
+              <span className="text-sm text-gray-600 truncate w-[200px] overflow-hidden text-ellipsis">
+                {selectedFile ? selectedFile.name : "Choose file"}
+              </span>
+              <input
+                type="file"
+                className="hidden"
+                name="file"
+                onChange={handleFileChange}
+              />
             </label>
-            <div className="flex items-center">
-              <label className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors">
-                <UploadCloud className="w-5 h-5 text-gray-500" />
-                <span className="text-sm text-gray-600 truncate w-[200px] overflow-hidden text-ellipsis">
-                  {selectedFile ? selectedFile.name : "Choose file"}
-                </span>
-                <input
-                  type="file"
-                  className="hidden"
-                  name="file"
-                  onChange={handleFileChange}
-                />
-              </label>
-            </div>
-            {errors.File && (
-              <p className="text-sm text-red-500 mt-1">{errors.File[0]}</p>
-            )}
           </div>
+          {errors.File && (
+            <p className="text-sm text-red-500 mt-1">{errors.File[0]}</p>
+          )}
         </div>
         <DialogFooter>
           <Button
