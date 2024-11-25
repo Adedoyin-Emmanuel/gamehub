@@ -1,18 +1,19 @@
-
-import React from "react";
-
-interface BackProps {
-    
-}
+import { Button } from "../ui/button";
+import { ChevronLeft } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const Back = () => {
-
-    return (
-        <div>
-            <h1>Back works!</h1>
-        </div>
-    );  
-}
+  const router = useNavigate();
+  return (
+    <Button
+      variant={"outline"}
+      onClick={() => {
+        router(-1);
+      }}
+    >
+      <ChevronLeft />
+    </Button>
+  );
+};
 
 export default Back;
-    

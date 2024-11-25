@@ -19,11 +19,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import {
-  PencilIcon,
-  TrashIcon,
-  CalendarIcon,
-} from "lucide-react";
+import { PencilIcon, TrashIcon, CalendarIcon } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import GameImageUpload from "@/components/game-image-upload";
 import { useParams } from "react-router-dom";
@@ -37,6 +33,7 @@ import React from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Badge } from "@/components/ui/badge";
 import { useNavigate } from "react-router-dom";
+import Back from "@/components/back";
 dayjs.extend(relativeTime);
 
 const GamePage = () => {
@@ -182,6 +179,10 @@ const GamePage = () => {
       <Navbar />
 
       <div className="container mx-auto py-8 p-1">
+        <Back />
+        <br />
+        <br />
+
         {isPending && <Loader isLoading />}
 
         {error && <h3 className="text-center capitalize">{error.message}</h3>}
