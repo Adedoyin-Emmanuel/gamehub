@@ -10,6 +10,7 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogFooter,
+  DialogClose,
 } from "@/components/ui/dialog";
 import {
   Select,
@@ -31,7 +32,7 @@ import { Input } from "@/components/ui/input";
 import React from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { Badge } from "@/components/ui/badge";
-
+import { useNavigate } from "react-router-dom";
 dayjs.extend(relativeTime);
 
 const GamePage = () => {
@@ -40,7 +41,11 @@ const GamePage = () => {
   const [errors, setErrors] = React.useState<Record<string, string[]>>({});
   const [dialogOpened, setDialogOpened] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
+  const [isDeleteActionLoading, setIsDeleteActionLoading] =
+    React.useState(false);
+  const [deleteDialogOpened, setDeleteDialogOpened] = React.useState(false);
   const queryClient = useQueryClient();
+  const router = useNavigate();
 
   const genres = [
     "Action",
@@ -118,8 +123,6 @@ const GamePage = () => {
       queryClient.invalidateQueries({ queryKey: ["GetGameDetails", gameId] });
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      console.log(error);
-
       if (error.response?.data?.errors) {
         setErrors(error.response.data.errors);
 
@@ -133,6 +136,30 @@ const GamePage = () => {
       }
     } finally {
       setIsLoading(false);
+    }
+  };
+
+  const handleGameDeletion = async () => {
+    try {
+      setIsDeleteActionLoading(true);
+      await Axios.delete(`/game/${gameId}`);
+      toast.success("Game deleted successfully");
+      router("/");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      if (error.response?.data?.errors) {
+        setErrors(error.response.data.errors);
+
+        const firstErrorKey = Object.keys(error.response.data.errors)[0];
+        const firstError = error.response.data.errors[firstErrorKey][0];
+        toast.error(firstError);
+      } else {
+        toast.error(
+          error.response?.data?.title || "An error occurred while updating game"
+        );
+      }
+    } finally {
+      setIsDeleteActionLoading(false);
     }
   };
 
@@ -282,7 +309,10 @@ const GamePage = () => {
                   </DialogContent>
                 </Dialog>
 
-                <Dialog>
+                <Dialog
+                  open={deleteDialogOpened}
+                  onOpenChange={setDeleteDialogOpened}
+                >
                   <DialogTrigger asChild>
                     <Button size="sm" variant="destructive">
                       <TrashIcon className="h-4 w-4 mr-2" />
@@ -297,9 +327,23 @@ const GamePage = () => {
                         cannot be undone.
                       </DialogDescription>
                     </DialogHeader>
-                    <DialogFooter>
-                      <Button variant="outline">Cancel</Button>
-                      <Button variant="destructive">Delete</Button>
+                    <DialogFooter className="flex gap-3">
+                      
+                      <DialogClose asChild>
+                        <Button variant="outline">Cancel</Button>
+                      </DialogClose>
+                      <Button
+                        variant="destructive"
+                        onClick={handleGameDeletion}
+                        disabled={isDeleteActionLoading}
+                      >
+                        <Loader
+                          isLoading={isDeleteActionLoading}
+                          color="#fff"
+                          size={20}
+                        />
+                        {isDeleteActionLoading ? "Deleting" : "Delete"}
+                      </Button>
                     </DialogFooter>
                   </DialogContent>
                 </Dialog>

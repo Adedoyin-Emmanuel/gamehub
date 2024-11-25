@@ -22,6 +22,7 @@ import { Axios } from "@/config/axios";
 import React from "react";
 import toast from "react-hot-toast";
 import Loader from "../loader";
+import { useQueryClient } from "@tanstack/react-query";
 
 const GameModal = () => {
   const [formData, setFormData] = React.useState({
@@ -34,6 +35,7 @@ const GameModal = () => {
   const [isLoading, setIsLoading] = React.useState(false);
   const [errors, setErrors] = React.useState<Record<string, string[]>>({});
   const [dialogOpened, setDialogOpened] = React.useState(false);
+  const queryClient = useQueryClient();
 
   const genres = [
     "Action",
@@ -93,9 +95,13 @@ const GameModal = () => {
 
       await Axios.post("/game", dataToSend);
       toast.success("Game created successfully!");
+      queryClient.invalidateQueries({
+        queryKey: ["GetAllGames"],
+      });
       setDialogOpened(false);
       setFormData({ name: "", description: "", genre: "" });
       setSelectedFile(null);
+
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.log(error);
