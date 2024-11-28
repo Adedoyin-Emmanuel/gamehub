@@ -1,8 +1,13 @@
-FROM mysql/mysql-server:latest
+FROM mcr.microsoft.com/dotnet/sdk:8.0
 
-ENV MYSQL_USER = admin
-ENV MYSQL_PASSWORD = admin@gamehub
-ENV MYSQL_DATABASE = gamehub-db
-ENV MYSQL_ROOT_PASSWORD=admin@gamehub
+WORKDIR /app
 
-EXPOSE 3306
+COPY *.csproj ./
+
+RUN dotnet restore
+
+COPY . ./
+
+RUN dotnet publish -c Release -0 ./publish
+
+ENTRYPOINT ["dotnet", "publish/api.dll"]
