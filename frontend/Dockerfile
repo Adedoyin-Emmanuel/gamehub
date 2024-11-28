@@ -1,4 +1,4 @@
-FROM node:20-alpine as BUILD_STAGE
+FROM node:22.11-alpine3.19 as build_stage
 
 WORKDIR /app
 
@@ -16,7 +16,7 @@ RUN addgroup app && adduser -S -G app app
 
 USER app
 
-COPY --from=BUILD_STAGE /app/dist /usr/share/nginx/html
+COPY --from=build_stage /app/dist /usr/share/nginx/html
 
 EXPOSE 80
 
