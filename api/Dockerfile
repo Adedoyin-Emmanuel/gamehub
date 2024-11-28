@@ -10,4 +10,6 @@ COPY . ./
 
 RUN dotnet publish -c Release -0 ./publish
 
+EXPOSE 5000
+
 ENTRYPOINT ["dotnet", "publish/api.dll"]
