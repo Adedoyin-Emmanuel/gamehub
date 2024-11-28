@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    restart: unless-stopped
+
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    ports:
+      - 5000:5000
+    restart: unless-stopped
+    depends_on:
+      - db
+
+  db:
+    image: mysql/mysql-server:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: admin@gamehub
+      MYSQL_DATABASE: gamehub-db
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin@gamehub
+    ports:
+      - 3306:3306
