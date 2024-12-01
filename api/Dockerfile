@@ -9,7 +9,7 @@ RUN dotnet restore
 COPY . ./
 
 
-RUN dotnet publish -c Release -0 ./publish
+RUN dotnet publish -c Release -o ./publish
 
 
 ENTRYPOINT ["dotnet", "publish/api.dll"]
