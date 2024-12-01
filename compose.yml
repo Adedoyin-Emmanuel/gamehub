@@ -7,7 +7,7 @@ services:
       - 80:80
     restart: unless-stopped
     env_file:
-      - .env
+      - ./frontend/.env
 
   api:
     build:
@@ -17,7 +17,7 @@ services:
       - 5000:5000
     restart: unless-stopped
     env_file:
-      - .env
+      - ./api/.env
     depends_on:
       - db
 

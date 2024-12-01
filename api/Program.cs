@@ -54,6 +54,11 @@ var uploadPaths = Path.Combine(builder.Environment.ContentRootPath, "Uploads");
 
 {
     var app = builder.Build();
+
+    using(var scope = app.Services.CreateScope()){
+        var dbContext = scope.ServiceProvider.GetRequiredService<GamehubContext>();
+        await dbContext.Database.MigrateAsync();
+    }
     
     if (app.Environment.IsDevelopment())
     {
