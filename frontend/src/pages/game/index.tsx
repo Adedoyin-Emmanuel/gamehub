@@ -128,7 +128,7 @@ const GamePage = () => {
       dataToSend.append("genre", formData.genre);
 
       await Axios.put(`/game/${gameId}`, dataToSend);
-      toast.success("Game created successfully!");
+      toast.success("Game updated successfully!");
       setIsEditDialogOpened(false);
 
       queryClient.invalidateQueries({ queryKey: ["GetGameDetails", gameId] });
