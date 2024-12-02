@@ -8,13 +8,11 @@ RUN npm install
 
 COPY . .
 
+ENV VITE_API_URL=http://localhost:8080
+
 RUN npm run build
 
 FROM nginx:1.27.3-alpine
-
-RUN addgroup app && adduser -S -G app app
-
-USER app
 
 COPY --from=build_stage /app/dist /usr/share/nginx/html
 

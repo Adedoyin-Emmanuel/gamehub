@@ -103,7 +103,6 @@ const GameModal = () => {
       setDialogOpened(false);
       setFormData({ name: "", description: "", genre: "" });
       setSelectedFile(null);
-d
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       console.log(error);

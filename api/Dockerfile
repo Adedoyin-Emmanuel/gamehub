@@ -8,8 +8,8 @@ RUN dotnet restore
 
 COPY . ./
 
-
 RUN dotnet publish -c Release -o ./publish
 
+EXPOSE 8080
 
 ENTRYPOINT ["dotnet", "publish/api.dll"]
